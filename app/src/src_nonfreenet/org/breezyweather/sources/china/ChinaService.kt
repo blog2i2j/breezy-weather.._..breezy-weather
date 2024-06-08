@@ -100,7 +100,9 @@ class ChinaService @Inject constructor(
             mApi.getMinutelyWeather(
                 location.latitude,
                 location.longitude,
-                context.currentLocale.code,
+                context.currentLocale.code.let {
+                    if (it.startsWith("zh")) it else "zh-cn"
+                }, // Workaround a server side bug with languages other than Chinese
                 isGlobal = false,
                 appKey = CHINA_APP_KEY,
                 locationKey = "weathercn%3A$locationKey",
